@@ -78,7 +78,7 @@ function Order(props) {
                             								<td> { order.payment ? 'Is payment' : 'COD' }</td>
 														<td> 
 															<a className='btn btn-gradient-success btn-rounded btn-fw' onClick={(e) => handleSubmit(order._id)}>See more</a>
-															<a className='btn btn-gradient-danger btn-rounded btn-fw' onClick={() => console.log(order.name)}><i className='mdi mdi-delete'></i></a>
+															<a className='btn btn-gradient-danger btn-rounded btn-fw' onClick={() => console.log(order._id)}><i className='mdi mdi-delete'></i></a>
 														</td>
 													</tr>
 												)
