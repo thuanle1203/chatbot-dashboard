@@ -47,6 +47,10 @@
 @import "../assets/styles/spinner";
 @import "../assets/styles/dashboard";
 
+/* === Componentsc custom === */
+
+@import "./product/Product.scss";
+
 /* === Components === */
 
 @import "../assets/styles/components/widgets";
@@ -110,3 +114,13 @@
 @import "../assets/styles/footer";
 @import "../assets/styles/layout";
 @import "../assets/styles/settings-panel";
+
+
+.table-responsive textarea {
+  height: 140px;
+  width: 900px;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid  #e0e0eb;
+  color:  #e0e0eb;
+}

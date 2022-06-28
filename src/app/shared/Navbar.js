@@ -36,11 +36,11 @@ class Navbar extends Component {
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link">
                   <div className="nav-profile-img">
-                    <img src={require("../../assets/images/faces/face1.jpg")} alt="user"/>
+                    <img src={require("../../assets/images/auth/user.png")} alt="user"/>
                     <span className="availability-status online"></span>
                   </div>
                   <div className="nav-profile-text">
-                    <p className="mb-1 text-black"><Trans>David Greymaax</Trans></p>
+                    <p className="mb-1 text-black"><Trans>{JSON.parse(localStorage.getItem('user')).name}</Trans></p>
                   </div>
                 </Dropdown.Toggle>
 
@@ -49,7 +49,9 @@ class Navbar extends Component {
                     <i className="mdi mdi-cached mr-2 text-success"></i>
                     <Trans>Activity Log</Trans>
                   </Dropdown.Item>
-                  <Dropdown.Item href="!#" onClick={evt =>evt.preventDefault()}>
+                  <Dropdown.Item href="!#" onClick={evt => {
+                      localStorage.clear('user')
+                    }}>
                     <i className="mdi mdi-logout mr-2 text-primary"></i>
                     <Trans>Signout</Trans>
                   </Dropdown.Item>
@@ -162,7 +164,9 @@ class Navbar extends Component {
               </Dropdown>
             </li>
             <li className="nav-item nav-logout d-none d-lg-block">
-              <a className="nav-link" href="!#" onClick={event => event.preventDefault()}>
+              <a className="nav-link" href="!#" onClick={evt => {
+                      localStorage.clear('user')
+                    }}>
                 <i className="mdi mdi-power"></i>
               </a>
             </li>

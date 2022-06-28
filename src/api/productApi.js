@@ -1,14 +1,17 @@
 import axios from "axios/index";
 
-const orderApi = {
-  async post(id, sessionId) {
-
-    console.log('abc',id,sessionId);
-    return await axios.post('/api/product/' + sessionId + '/' + process.env.REACT_APP_BUSINESS_ID, {
-      id
-    });
+const productApi = {
+  async get(businessId) {
+    return await axios.get(process.env.REACT_APP_API_ACCESS + '/api/products/' + businessId + '/business');
   },
 
+  async deleteOne(id) {
+    return await axios.delete(process.env.REACT_APP_API_ACCESS + '/api/products/' + id)
+  },
+
+  async createOne(product) {
+    return await axios.post(process.env.REACT_APP_API_ACCESS + '/api/products', product)
+  }
 }
 
-export default orderApi
+export default productApi

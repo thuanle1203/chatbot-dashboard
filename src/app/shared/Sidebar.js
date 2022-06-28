@@ -35,6 +35,8 @@ class Sidebar extends Component {
     const dropdownPaths = [
       {path:'/apps', state: 'appsMenuOpen'},
       {path:'/basic-ui', state: 'basicUiMenuOpen'},
+      {path:'/products', state: 'productMenuOpen'},
+      {path:'/category', state: 'categoryMenuOpen'},
       {path:'/advanced-ui', state: 'advancedUiMenuOpen'},
       {path:'/form-elements', state: 'formElementsMenuOpen'},
       {path:'/tables', state: 'tablesMenuOpen'},
@@ -62,12 +64,12 @@ class Sidebar extends Component {
           <li className="nav-item nav-profile">
             <a href="!#" className="nav-link" onClick={evt =>evt.preventDefault()}>
               <div className="nav-profile-image">
-                <img src={ require("../../assets/images/faces/face1.jpg") } alt="profile" />
+                <img src={ require("../../assets/images/auth/user.png") } alt="profile" />
                 <span className="login-status online"></span> {/* change to offline or busy as needed */}
               </div>
               <div className="nav-profile-text">
-                <span className="font-weight-bold mb-2"><Trans>David Grey. H</Trans></span>
-                <span className="text-secondary text-small"><Trans>Project Manager</Trans></span>
+                <span className="font-weight-bold mb-2"><Trans>{JSON.parse(localStorage.getItem('user')).name}</Trans></span>
+                <span className="text-secondary text-small"><Trans>Manager</Trans></span>
               </div>
               <i className="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
             </a>
@@ -79,22 +81,48 @@ class Sidebar extends Component {
             </Link>
           </li>
           <li className={ this.isPathActive('/orders') ? 'nav-item active' : 'nav-item' }>
-            <Link className="nav-link" to="/orders">
+            <Link className="nav-link" to="/orders/list">
               <span className="menu-title"><Trans>Orders</Trans></span>
               <i className="mdi mdi-archive menu-icon"></i>
             </Link>
           </li>
-          <li className={ this.isPathActive('/products') ? 'nav-item active' : 'nav-item' }>
+          <li className={ this.isPathActive('/business') ? 'nav-item active' : 'nav-item' }>
+            <Link className="nav-link" to="/business">
+              <span className="menu-title"><Trans>Business</Trans></span>
+              <i className="mdi mdi-archive menu-icon"></i>
+            </Link>
+          </li>
+          {/* <li className={ this.isPathActive('/products') ? 'nav-item active' : 'nav-item' }>
             <Link className="nav-link" to="/products">
               <span className="menu-title"><Trans>Products</Trans></span>
               <i className="mdi mdi-shopping-outline menu-icon"></i>
             </Link>
+          </li> */}
+          <li className={ this.isPathActive('/products') ? 'nav-item active' : 'nav-item' }>
+            <div className={ this.state.productMenuOpen ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('productMenuOpen') } data-toggle="collapse">
+              <span className="menu-title"><Trans>Product</Trans></span>
+              <i className="menu-arrow"></i>
+              <i className="mdi mdi-crosshairs-gps menu-icon"></i>
+            </div>
+            <Collapse in={ this.state.productMenuOpen }>
+              <ul className="nav flex-column sub-menu">
+                <li className="nav-item"> <Link className={ this.isPathActive('/products/list') ? 'nav-link active' : 'nav-link' } to="/products/list"><Trans>Product List</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/products/create') ? 'nav-link active' : 'nav-link' } to="/products/create"><Trans>Create Product</Trans></Link></li>
+              </ul>
+            </Collapse>
           </li>
           <li className={ this.isPathActive('/category') ? 'nav-item active' : 'nav-item' }>
-            <Link className="nav-link" to="/category">
+            <div className={ this.state.categoryMenuOpen ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('categoryMenuOpen') } data-toggle="collapse">
               <span className="menu-title"><Trans>Categories</Trans></span>
-              <i className="mdi mdi-format-list-bulleted menu-icon"></i>
-            </Link>
+              <i className="menu-arrow"></i>
+              <i className="mdi mdi-crosshairs-gps menu-icon"></i>
+            </div>
+            <Collapse in={ this.state.categoryMenuOpen }>
+              <ul className="nav flex-column sub-menu">
+                <li className="nav-item"> <Link className={ this.isPathActive('/category/list') ? 'nav-link active' : 'nav-link' } to="/category/list"><Trans>Category List</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/category/create') ? 'nav-link active' : 'nav-link' } to="/category/create"><Trans>Create Category</Trans></Link></li>
+              </ul>
+            </Collapse>
           </li>
 
 
@@ -107,7 +135,7 @@ class Sidebar extends Component {
 
 
 
-          <li className={ this.isPathActive('/basic-ui') ? 'nav-item active' : 'nav-item' }>
+          {/* <li className={ this.isPathActive('/basic-ui') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.basicUiMenuOpen ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('basicUiMenuOpen') } data-toggle="collapse">
               <span className="menu-title"><Trans>Basic UI Elements</Trans></span>
               <i className="menu-arrow"></i>
@@ -213,7 +241,7 @@ class Sidebar extends Component {
               <span className="menu-title"><Trans>Documentation</Trans></span>
               <i className="mdi mdi-file-document-box menu-icon"></i>
             </a>
-          </li>
+          </li> */}
         </ul>
       </nav>
     );

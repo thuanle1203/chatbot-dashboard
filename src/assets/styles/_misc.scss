@@ -9,6 +9,15 @@ body {
   background: $content-bg;
 }
 
+.disable {
+  cursor: not-allowed;
+  pointer-events: none;
+
+  /*Button disabled - CSS color class*/
+  color: #c0c0c0;
+  background-color: #ffffff;
+}
+
 *:-moz-full-screen,
 *:-webkit-full-screen,
 *:fullscreen *:-ms-fullscreen {
