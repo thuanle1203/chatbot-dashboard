@@ -18,12 +18,13 @@ function Order(props) {
     })
 }
 
-  // Similar to componentDidMount and componentDidUpdate:
+  // Similar to componentDidMount and compon entDidUpdate:
   useEffect(() => {
     ;(async () => {
 			try {
 				const response = await orderApi.get(businessId)
 				setOrderList(response.data)
+        console.log(response)
 			} catch (error) {
 				console.log(error.message)
 			}
@@ -60,10 +61,11 @@ function Order(props) {
 								<table className="table">
 									<thead>
 										<tr>
-											<th> CustomerId </th>
+                      <th> Order At </th>
 											<th> Currency </th>
-                      <th> Payment </th>
-                      <th> Action </th>
+											<th> Payment </th>
+                      <th> Status </th>
+											<th> Action </th>
 										</tr>
 									</thead>
 									<tbody>
@@ -71,11 +73,14 @@ function Order(props) {
 											orderList.map((order, i )=> {
 												return (
 													<tr key={i}>
-														<td> { order.customerId } </td>
+                            <td> { order.createdAt.substring(0,10) } </td>
 														<td>
 															<label className="badge badge-gradient-success">{ order.currency }</label>
 														</td>
-                            								<td> { order.payment ? 'Is payment' : 'COD' }</td>
+                            <td> { order.payment ? 'Is payment' : 'COD' }</td>
+                            <td>
+                              { order.status ? 'Approved' : 'Unapprove' }
+                            </td>
 														<td> 
 															<a className='btn btn-gradient-success btn-rounded btn-fw' onClick={(e) => handleSubmit(order._id)}>See more</a>
 															<a className='btn btn-gradient-danger btn-rounded btn-fw' onClick={() => console.log(order._id)}><i className='mdi mdi-delete'></i></a>

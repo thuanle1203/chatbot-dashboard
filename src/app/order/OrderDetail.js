@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { info } from 'sass'
 import orderApi from '../../api/orderApi'
 import ProductCart from '../product/ProductCart'
+// ES6 Modules or TypeScript
+import Swal from 'sweetalert2'
 
 function OrderDetail(props) {
   const { businessId } = JSON.parse(localStorage.getItem('user'))
@@ -13,6 +15,7 @@ function OrderDetail(props) {
   const [customerInfor, setCustomerInfor] = useState([])
   const [itemCount, setItemCount] = useState(0)
   const [subTotal, setSubTotal] = useState(0)
+  const [approved, setApproved] = useState(null)
 
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
@@ -24,6 +27,7 @@ function OrderDetail(props) {
         setAddress([response.data.fullOrder.address])
         setProductList(response.data.fullOrder.productList)
         setCustomerInfor([response.data.customer.infor])
+        setApproved(response.data.fullOrder.approveAt ? response.data.fullOrder.approveAt : null)
 
         const itemCount = response.data.fullOrder.productList.reduce((quantity, product) => {
           return quantity + +product.quantity;
@@ -35,8 +39,6 @@ function OrderDetail(props) {
 
         setItemCount(itemCount)
         setSubTotal(subTotal)
-
-        console.log(response.data.fullOrder, itemCount, subTotal)
 
 			} catch (error) {
 				console.log(error.message)
@@ -86,8 +88,29 @@ function OrderDetail(props) {
                   })
                 }
               </div>
-              <button type="submit" className="btn btn-gradient-primary mr-2">Approve</button>
-              <button className="btn btn-light">Cancel</button>
+              <button onClick={ async () => {
+                setIsLoading(true)
+                const response = await orderApi.approveOrder(props.location.state.orderId).then(data => {
+                  setIsLoading(false)
+                  Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: 'Success!',
+                    showConfirmButton: false,
+                    timer: 2500
+                  }).catch(() => {
+                    setIsLoading(false)
+                    Swal.fire({
+                      position: "center",
+                      icon: "error",
+                      title: 'Error!',
+                      showConfirmButton: false,
+                      timer: 2500
+                    })
+                  })
+                })
+              }} className={"btn mr-2 " + (approved ? 'disable btn-light' : 'btn-gradient-primary')}>{ approved ? 'Approved' : 'Approve'}</button>
+              {/* <button className="btn btn-light">Cancel</button> */}
             </div>
           </div>
         </div>

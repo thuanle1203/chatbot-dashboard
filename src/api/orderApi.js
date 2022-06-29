@@ -13,6 +13,9 @@ const orderApi = {
     return await axios.delete(process.env.REACT_APP_API_ACCESS + '/api/category/' + id)
   },
 
+  async approveOrder(id) {
+    return await axios.put(process.env.REACT_APP_API_ACCESS + '/api/order/' + id + '/approve')
+  }
 }
 
 export default orderApi
